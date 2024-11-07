@@ -8,7 +8,6 @@ import hexlet.code.dto.UserDTO;
 import hexlet.code.mapper.UserMapper;
 import hexlet.code.model.User;
 import hexlet.code.repository.UserRepository;
-import org.assertj.core.api.Assertions;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -78,7 +77,6 @@ public class UserControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "hexlet", password = "123")
     public void testIndex() throws Exception {
         var response = mockMvc.perform(get("/users").with(jwt()))
                 .andExpect(status().isOk())
@@ -94,7 +92,6 @@ public class UserControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "hexlet",password = "123")
     public void testShow() throws Exception {
 
         var request = get("/users/" + testUser.getId()).with(jwt());
@@ -110,7 +107,6 @@ public class UserControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "hexlet",password = "123")
     public void testCreate() throws Exception {
 
         var createDto = new UserCreateDTO();
@@ -133,7 +129,6 @@ public class UserControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "hexlet",password = "123")
     public void testUpdate() throws Exception {
         var currentToken = jwt().jwt(builder -> builder.subject(testUser.getEmail()));
         var data = new HashMap<>();
@@ -151,7 +146,6 @@ public class UserControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "hexlet",password = "123")
     public void testDestroy() throws Exception {
         var currentToken = jwt().jwt(builder -> builder.subject(testUser.getEmail()));
         var request = delete("/users/" + testUser.getId()).with(currentToken);

@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 import lombok.Getter;
 import lombok.Setter;
 
-// BEGIN
 @Component
 @ConfigurationProperties(prefix = "rsa")
 @Setter
@@ -18,4 +17,3 @@ public class RsaKeyProperties {
     private RSAPublicKey publicKey;
     private RSAPrivateKey privateKey;
 }
-// END

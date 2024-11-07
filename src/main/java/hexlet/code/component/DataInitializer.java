@@ -15,13 +15,11 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class DataInitializer implements ApplicationRunner {
 
-
     @Autowired
     private final UserRepository userRepository;
 
     @Autowired
     private final UserMapper userMapper;
-
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
