@@ -11,11 +11,6 @@ import org.openapitools.jackson.nullable.JsonNullable;
 )
 public abstract class JsonNullableMapper {
 
-    @Named("mapJsonNullableLongToLong")
-    public static Long mapJsonNullableLongToLong(JsonNullable<Long> value) {
-        return value.orElse(null);
-    }
-
     public <T> JsonNullable<T> wrap(T entity) {
         return JsonNullable.of(entity);
     }

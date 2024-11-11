@@ -46,6 +46,7 @@ public class User implements BaseEntity, UserDetails {
     @Column(unique = true)
     private String email;
 
+
     @Size(min = 3)
     @NotNull
     private String password;
@@ -65,6 +66,11 @@ public class User implements BaseEntity, UserDetails {
     @Override
     public String getUsername() {
         return email;
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
     }
 
     @Override

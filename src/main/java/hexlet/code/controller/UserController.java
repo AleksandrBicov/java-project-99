@@ -16,7 +16,7 @@ import java.util.List;
 import hexlet.code.repository.UserRepository;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/users")
 public class UserController {
 
     @Autowired
