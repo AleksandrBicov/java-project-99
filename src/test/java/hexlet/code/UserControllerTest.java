@@ -77,7 +77,7 @@ public class UserControllerTest {
 
     @Test
     public void testIndex() throws Exception {
-        var response = mockMvc.perform(get("/users").with(jwt()))
+        var response = mockMvc.perform(get("/api/users").with(jwt()))
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse();
@@ -93,7 +93,7 @@ public class UserControllerTest {
     @Test
     public void testShow() throws Exception {
 
-        var request = get("/users/" + testUser.getId()).with(jwt());
+        var request = get("/api/users/" + testUser.getId()).with(jwt());
         var result = mockMvc.perform(request)
                 .andExpect(status().isOk())
                 .andReturn();
@@ -114,7 +114,7 @@ public class UserControllerTest {
         createDto.setFirstName("Denis");
         createDto.setLastName("unknown");
 
-        var request = post("/users")
+        var request = post("/api/users")
                 .with(token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(om.writeValueAsString(createDto));
@@ -133,7 +133,7 @@ public class UserControllerTest {
         var data = new HashMap<>();
         data.put("firstName", "Denis");
 
-        var request = put("/users/" + testUser.getId()).with(currentToken)
+        var request = put("/api/users/" + testUser.getId()).with(currentToken)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(om.writeValueAsString(data));
 
@@ -147,7 +147,7 @@ public class UserControllerTest {
     @Test
     public void testDestroy() throws Exception {
         var currentToken = jwt().jwt(builder -> builder.subject(testUser.getEmail()));
-        var request = delete("/users/" + testUser.getId()).with(currentToken);
+        var request = delete("/api/users/" + testUser.getId()).with(currentToken);
         mockMvc.perform(request)
                 .andExpect(status().isNoContent());
         assertThat(userRepository.existsById(testUser.getId())).isEqualTo(false);
