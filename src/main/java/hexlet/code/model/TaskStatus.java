@@ -9,6 +9,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -23,6 +24,7 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @Table(name = "task_statuses")
 @EntityListeners(AuditingEntityListener.class)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@NoArgsConstructor
 public class TaskStatus {
 
     @Id
@@ -39,4 +41,9 @@ public class TaskStatus {
 
     @CreatedDate
     private LocalDate createdAt;
+
+    public TaskStatus(String name, String slug) {
+        this.name = name;
+        this.slug = slug;
+    }
 }

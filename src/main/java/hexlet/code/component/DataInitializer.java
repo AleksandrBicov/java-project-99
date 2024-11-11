@@ -1,6 +1,8 @@
 package hexlet.code.component;
 
 
+import hexlet.code.model.TaskStatus;
+import hexlet.code.repository.TaskStatusRepository;
 import hexlet.code.repository.UserRepository;
 import hexlet.code.dto.user.UserCreateDTO;
 import hexlet.code.mapper.UserMapper;
@@ -19,6 +21,9 @@ public class DataInitializer implements ApplicationRunner {
     private final UserRepository userRepository;
 
     @Autowired
+    private final TaskStatusRepository taskStatusRepository;
+
+    @Autowired
     private final UserMapper userMapper;
 
     @Override
@@ -30,5 +35,12 @@ public class DataInitializer implements ApplicationRunner {
         userData.setPassword("123");
         var user = userMapper.map(userData);
         userRepository.save(user);
+
+        // Инициализация дефолтных статусов
+        taskStatusRepository.save(new TaskStatus("Draft", "draft"));
+        taskStatusRepository.save(new TaskStatus("To Review", "to_review"));
+        taskStatusRepository.save(new TaskStatus("To Be Fixed", "to_be_fixed"));
+        taskStatusRepository.save(new TaskStatus("To Publish", "to_publish"));
+        taskStatusRepository.save(new TaskStatus("Published", "published"));
     }
 }
