@@ -2,7 +2,7 @@ package hexlet.code.util;
 
 //import hexlet.code.model.Label;
 //import hexlet.code.model.Task;
-//import hexlet.code.model.TaskStatus;
+import hexlet.code.model.TaskStatus;
 import hexlet.code.model.User;
 
 import jakarta.annotation.PostConstruct;
@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 public class ModelGenerator {
 
     private Model<User> userModel;
-//    private Model<TaskStatus> taskStatusModel;
+   private Model<TaskStatus> taskStatusModel;
 //    private Model<Task> taskModel;
 //    private Model<Label> labelModel;
 
@@ -36,13 +36,13 @@ public class ModelGenerator {
                 .supply(Select.field(User::getPassword), () -> faker.internet().password())
                 .toModel();
 
-//        taskStatusModel = Instancio.of(TaskStatus.class)
-//                .ignore(Select.field(TaskStatus::getId))
-//                .ignore(Select.field(TaskStatus::getCreatedAt))
-//                .supply(Select.field(TaskStatus::getName), () -> faker.lorem().word())
-//                .supply(Select.field(TaskStatus::getSlug), () -> faker.lorem().characters(3, 200))
-//                .toModel();
-//
+        taskStatusModel = Instancio.of(TaskStatus.class)
+                .ignore(Select.field(TaskStatus::getId))
+                .ignore(Select.field(TaskStatus::getCreatedAt))
+                .supply(Select.field(TaskStatus::getName), () -> faker.lorem().word())
+                .supply(Select.field(TaskStatus::getSlug), () -> faker.lorem().characters(3, 200))
+                .toModel();
+
 //        taskModel = Instancio.of(Task.class)
 //                .ignore(Select.field(Task::getId))
 //                .ignore(Select.field(Task::getCreatedAt))
