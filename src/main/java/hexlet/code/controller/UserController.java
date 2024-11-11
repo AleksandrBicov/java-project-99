@@ -8,10 +8,12 @@ import hexlet.code.mapper.UserMapper;
 import hexlet.code.model.User;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import hexlet.code.repository.UserRepository;
 
@@ -25,12 +27,16 @@ public class UserController {
     @Autowired
     private UserMapper userMapper;
 
-    @GetMapping(path = "")
-    public List<UserDTO> index() {
-        List <User> users = userRepository.findAll();
-        return users.stream()
-                .map(p -> userMapper.map(p))
-                .toList();
+    @GetMapping()
+    public ResponseEntity<List<UserDTO>> getAll() {
+        List<User> users = userRepository.findAll();
+        List<UserDTO> userDTOs = users.stream()
+                .map(userMapper::map)
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok()
+                .header("X-Total-Count", String.valueOf(users.size()))
+                .body(userDTOs);
     }
 
     @GetMapping(path = "/{id}")
