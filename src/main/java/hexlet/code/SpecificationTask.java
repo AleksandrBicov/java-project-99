@@ -2,20 +2,12 @@ package hexlet.code;
 
 import hexlet.code.dto.task.ParamsDTO;
 import hexlet.code.model.Task;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Predicate;
-import jakarta.persistence.criteria.Root;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SpecificationTask implements Specification<Task> {
+public class SpecificationTask{
 
-    @Override
-    public Predicate toPredicate(Root<Task> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
-        return null;
-    }
 
     public Specification<Task> build(ParamsDTO params) {
         return withAssigneeId(params.getAssigneeId())
