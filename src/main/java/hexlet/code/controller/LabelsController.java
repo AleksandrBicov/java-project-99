@@ -1,0 +1,51 @@
+package hexlet.code.controller;
+
+import hexlet.code.dto.label.LabelCreateDTO;
+import hexlet.code.dto.label.LabelDTO;
+import hexlet.code.dto.label.LabelUpdateDTO;
+import hexlet.code.service.LabelService;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/api")
+public class LabelsController {
+
+    private final LabelService labelService;
+
+    @GetMapping(path = "/labels")
+    public ResponseEntity<List<LabelDTO>> index() {
+        var labels = labelService.getAll();
+        return ResponseEntity.ok()
+                .header("X-Total-Count", String.valueOf(labels.size()))
+                .body(labels);
+    }
+
+    @GetMapping(path = "/labels/{id}")
+    public LabelDTO show(@PathVariable Long id) {
+        return labelService.getById(id);
+    }
+
+    @PostMapping(path = "/labels")
+    @ResponseStatus(HttpStatus.CREATED)
+    public LabelDTO create(@Valid @RequestBody LabelCreateDTO dataDTO) {
+        return labelService.create(dataDTO);
+    }
+
+    @PutMapping(path = "/labels/{id}")
+    public LabelDTO update(@Valid @RequestBody LabelUpdateDTO dataDTO, @PathVariable Long id) {
+        return labelService.update(dataDTO, id);
+    }
+
+    @DeleteMapping(path = "/labels/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void destroy(@PathVariable Long id) {
+        labelService.delete(id);
+    }
+}

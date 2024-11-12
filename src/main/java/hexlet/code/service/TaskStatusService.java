@@ -15,31 +15,31 @@ import java.util.List;
 public class TaskStatusService {
 
     private TaskStatusRepository repository;
-    private TaskStatusMapper statusMapper;
+    private TaskStatusMapper mapper;
 
     public List<TaskStatusDTO> getAll() {
         var statuses = repository.findAll();
-        return statusMapper.map(statuses);
+        return mapper.map(statuses);
     }
 
     public TaskStatusDTO getById(Long id) {
         var status = repository.findById(id)
                 .orElseThrow();
-        return statusMapper.map(status);
+        return mapper.map(status);
     }
 
     public TaskStatusDTO create(TaskStatusCreateDTO statusData) {
-        var status = statusMapper.map(statusData);
+        var status = mapper.map(statusData);
         repository.save(status);
-        return statusMapper.map(status);
+        return mapper.map(status);
     }
 
     public TaskStatusDTO update(TaskStatusUpdateDTO statusData, Long id) {
         var status = repository.findById(id)
                 .orElseThrow();
-        statusMapper.map(statusData, status);
+        mapper.map(statusData, status);
         repository.save(status);
-        return statusMapper.map(status);
+        return mapper.map(status);
     }
 
     public void delete(Long id) {
