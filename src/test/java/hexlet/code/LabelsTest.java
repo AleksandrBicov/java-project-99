@@ -54,7 +54,7 @@ class LabelsTest {
 
     @BeforeEach
     public void setUp() {
-        token = jwt().jwt(builder -> builder.subject("aaa@bbb.com"));
+        token = jwt().jwt(builder -> builder.subject("test@test.ru"));
         testLabel = Instancio.of(modelGenerator.getLabelModel()).create();
 
         labelRepository.save(testLabel);
@@ -76,7 +76,7 @@ class LabelsTest {
     @Test
     public void testCreate() throws Exception {
         var data = new LabelCreateDTO();
-        data.setName("testName");
+        data.setName("test");
 
         var request = post("/api/labels")
                 .with(token)
@@ -94,7 +94,7 @@ class LabelsTest {
     @Test
     public void testUpdate() throws Exception {
         var data = new LabelUpdateDTO();
-        data.setName(JsonNullable.of("newName"));
+        data.setName(JsonNullable.of("new"));
         var request = put("/api/labels/" + testLabel.getId())
                 .with(token)
                 .contentType(MediaType.APPLICATION_JSON)

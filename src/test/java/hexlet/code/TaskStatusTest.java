@@ -50,7 +50,7 @@ class TaskStatusTest {
 
     @BeforeEach
     public void setup() {
-        token = jwt().jwt(builder -> builder.subject("aaa@bbb.com"));
+        token = jwt().jwt(builder -> builder.subject("test@test.ru"));
 
         testTaskStatus = Instancio.of(modelGenerator.getTaskStatusModel()).create();
 
@@ -90,7 +90,7 @@ class TaskStatusTest {
     @Test
     public void testUpdate() throws Exception {
         var updatedData = new TaskStatusUpdateDTO();
-        updatedData.setName(JsonNullable.of("newses"));
+        updatedData.setName(JsonNullable.of("new"));
 
         var request = put("/api/task_statuses/" + testTaskStatus.getId())
                 .with(token)

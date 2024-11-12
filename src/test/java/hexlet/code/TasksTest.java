@@ -89,7 +89,7 @@ public class TasksTest {
                 .apply(springSecurity())
                 .build();
 
-        token = jwt().jwt(builder -> builder.subject("hexlet@example.com"));
+        token = jwt().jwt(builder -> builder.subject("test@test.ru"));
 
         testTask = Instancio.of(modelGenerator.getTaskModel()).create();
         testTaskStatus = Instancio.of(modelGenerator.getTaskStatusModel()).create();
@@ -152,7 +152,7 @@ public class TasksTest {
     public void testCreate() throws Exception {
         var taskStatus = taskStatusRepository.findBySlug("draft").get();
         var data = new TaskCreateDTO();
-        data.setTitle("New Task");
+        data.setTitle("Task");
         data.setSlug(taskStatus.getSlug());
 
         var request = post("/api/tasks")
@@ -172,7 +172,7 @@ public class TasksTest {
     @Test
     public void testUpdate() throws Exception {
         var data = new TaskUpdateDTO();
-        data.setTitle(JsonNullable.of("Update"));
+        data.setTitle(JsonNullable.of("Task"));
 
         var request = put("/api/tasks/" + testTask.getId()).with(jwt())
                 .contentType(MediaType.APPLICATION_JSON)
@@ -181,7 +181,7 @@ public class TasksTest {
                 .andExpect(status().isOk());
 
         var task = taskRepository.findById(testTask.getId()).get();
-        assertThat(task.getName()).isEqualTo("Update");
+        assertThat(task.getName()).isEqualTo("Task");
     }
 
     @Test

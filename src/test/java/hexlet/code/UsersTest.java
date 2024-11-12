@@ -23,6 +23,7 @@ import org.springframework.web.context.WebApplicationContext;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -86,7 +87,7 @@ public class UsersTest {
 
         List<UserDTO> actual = om.readValue(body, new TypeReference<>() { });
 
-        assertThat(actual).isNotEmpty().allMatch(userDTO -> userDTO instanceof UserDTO);
+        assertThat(actual).isNotEmpty().allMatch(Objects::nonNull);
 
     }
 
@@ -109,10 +110,10 @@ public class UsersTest {
     public void testCreate() throws Exception {
 
         var createDto = new UserCreateDTO();
-        createDto.setEmail("test@mail.ru");
-        createDto.setPassword("qwerty");
-        createDto.setFirstName("Denis");
-        createDto.setLastName("unknown");
+        createDto.setEmail("test@test.ru");
+        createDto.setPassword("test");
+        createDto.setFirstName("test");
+        createDto.setLastName("test");
 
         var request = post("/api/users")
                 .with(token)
@@ -131,7 +132,7 @@ public class UsersTest {
     public void testUpdate() throws Exception {
         var currentToken = jwt().jwt(builder -> builder.subject(testUser.getEmail()));
         var data = new HashMap<>();
-        data.put("firstName", "Denis");
+        data.put("firstName", "test");
 
         var request = put("/api/users/" + testUser.getId()).with(currentToken)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -141,7 +142,7 @@ public class UsersTest {
                 .andExpect(status().isOk());
 
         var user = userRepository.findById(testUser.getId()).get();
-        assertThat(user.getFirstName()).isEqualTo(("Denis"));
+        assertThat(user.getFirstName()).isEqualTo(("test"));
     }
 
     @Test
