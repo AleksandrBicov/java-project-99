@@ -6,8 +6,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SpecificationTask{
-
+public class FiltrationTask {
 
     public Specification<Task> build(ParamsDTO params) {
         return withAssigneeId(params.getAssigneeId())

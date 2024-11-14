@@ -1,6 +1,6 @@
 package hexlet.code.service;
 
-import hexlet.code.SpecificationTask;
+import hexlet.code.FiltrationTask;
 import hexlet.code.dto.task.ParamsDTO;
 import hexlet.code.dto.task.TaskCreateDTO;
 import hexlet.code.dto.task.TaskDTO;
@@ -18,7 +18,7 @@ public class TaskService {
 
     private TaskRepository repository;
     private TaskMapper taskMapper;
-    private SpecificationTask taskSpecification;
+    private FiltrationTask taskSpecification;
 
     public List<TaskDTO> getAll(ParamsDTO params) {
         var spec = taskSpecification.build(params);
