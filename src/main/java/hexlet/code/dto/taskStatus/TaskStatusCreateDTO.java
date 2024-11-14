@@ -14,10 +14,10 @@ public class TaskStatusCreateDTO {
 
     @Size(min = 1)
     @NotNull
-    String name;
+    private String name;
 
     @Size(min = 1)
     @NotNull
-    String slug;
-
+    private String slug;
 }
+

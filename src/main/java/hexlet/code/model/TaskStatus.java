@@ -29,15 +29,15 @@ public class TaskStatus {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    long id;
+    private long id;
 
     @Size(min = 1)
     @NotNull
-    String name;
+    private String name;
 
     @Size(min = 1)
     @NotNull
-    String slug;
+    private String slug;
 
     @CreatedDate
     private LocalDate createdAt;
