@@ -1,4 +1,4 @@
-package hexlet.code;
+package hexlet.code.filtration;
 
 import hexlet.code.dto.task.ParamsDTO;
 import hexlet.code.model.Task;
