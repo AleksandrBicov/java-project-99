@@ -1,5 +1,7 @@
 plugins {
-	java
+	application
+	checkstyle
+	jacoco
 	id("org.springframework.boot") version "3.3.5"
 	id("io.spring.dependency-management") version "1.1.6"
 	id("io.freefair.lombok") version "8.6"
@@ -16,11 +18,7 @@ java {
 }
 
 sentry {
-	// Generates a JVM (Java, Kotlin, etc.) source bundle and uploads your source code to Sentry.
-	// This enables source context, allowing you to see your source
-	// code as part of your stack traces in Sentry.
 	includeSourceContext = true
-
 	org = "kazahstan"
 	projectName = "java-spring-boot"
 	authToken = System.getenv("SENTRY_AUTH_TOKEN")

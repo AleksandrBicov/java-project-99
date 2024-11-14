@@ -1,10 +1,27 @@
+setup:
+	npm install
+	./gradlew wrapper --gradle-version 8.7
+	./gradlew build
+
+clean:
+	./gradlew clean
+
+build:
+	./gradlew clean build
+
+install:
+	./gradlew installBootDist
+
+lint:
+	./gradlew checkstyleMain checkstyleTest
+
 test:
 	./gradlew test
 
 report:
 	./gradlew jacocoTestReport
 
-lint:
-	./gradlew checkstyleMain
 
-.PHONY: build
+
+
+.PHONY: build frontend
