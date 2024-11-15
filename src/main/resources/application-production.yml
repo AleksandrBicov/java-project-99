@@ -7,3 +7,8 @@ spring:
     username: my_database_ujvh_user
     password: FZBQRlLL7dqfrh8QmEMzJXwPL8Hq4bEh
     driver-class-name: org.postgresql.Driver
+
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: update
