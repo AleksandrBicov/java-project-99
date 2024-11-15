@@ -12,6 +12,9 @@ build:
 install:
 	./gradlew installBootDist
 
+inst:
+	./gradlew build installDist
+
 lint:
 	./gradlew checkstyleMain checkstyleTest
 
