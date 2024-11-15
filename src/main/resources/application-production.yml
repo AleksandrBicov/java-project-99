@@ -3,10 +3,12 @@ spring:
     activate:
       on-profile: stage
   datasource:
-    url: jdbc:h2:file:./test
-    username: admin
-    password: admin
-    driver-class-name: org.h2.Driver
-  h2:
-    console:
-      enabled: true
+    url: jdbc:postgresql://dpg-csrih3ggph6c73b6ur3g-a/my_database_ujvh
+    username: my_database_ujvh_user
+    password: FZBQRlLL7dqfrh8QmEMzJXwPL8Hq4bEh
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: update
