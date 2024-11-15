@@ -1,15 +1,9 @@
 FROM gradle:8.7.0-jdk21
 
-WORKDIR /app
+WORKDIR /
 
-# Копируем все файлы проекта в рабочую директорию
-COPY . /app
+COPY / .
 
-# Устанавливаем переменную окружения для активации профиля
-ENV SPRING_PROFILES_ACTIVE=stage
-
-# Собираем проект
 RUN gradle installDist
 
-# Запускаем приложение
-CMD ["/app/build/install/app/bin/app"]
+CMD ./build/install/app/bin/app --spring.profiles.active=stage
