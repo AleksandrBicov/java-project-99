@@ -1,16 +1,15 @@
----
-
-spring:
-  jpa:
-    show-sql: true
-    hibernate:
-      ddl-auto: update
-  output:
-    ansi:
-      enabled: always
-  profiles:
-    default: development
-
+server:
+  port: 8080
 rsa:
   private-key: classpath:certs/private.pem
   public-key: classpath:certs/public.pem
+spring:
+  application:
+    name: app
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+      generate-ddl: true
+  profiles:
+    default: dev
