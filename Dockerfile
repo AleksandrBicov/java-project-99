@@ -10,4 +10,4 @@ COPY . .
 RUN gradle installDist
 
 # Запускаем приложение с указанием профиля
-CMD ["./build/install/app/bin/app", "--spring.profiles.active=stage"]
+CMD ["java", "-cp", "/app/build/install/app/lib/*:/app/build/install/app/bin", "hexlet.code.AppApplication", "--spring.profiles.active=stage"]
