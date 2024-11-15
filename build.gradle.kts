@@ -19,7 +19,7 @@ java {
 
 sentry {
 	includeSourceContext = true
-	org = "kazahstan"
+	org = "myoirganization"
 	projectName = "java-spring"
 	authToken = System.getenv("SENTRY_AUTH_TOKEN")
 }
