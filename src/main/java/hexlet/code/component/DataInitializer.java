@@ -33,9 +33,11 @@ public class DataInitializer implements ApplicationRunner {
         userData.setLastName("HEXLET");
         userData.setEmail("hexlet@test.com");
         userData.setPassword("123");
-        var user = userMapper.map(userData);
-        userRepository.save(user);
 
+        if (userRepository.findByEmail(userData.getEmail()).isEmpty()) {
+            var user = userMapper.map(userData);
+            userRepository.save(user);
+        }
         // Инициализация дефолтных статусов
         taskStatusRepository.save(new TaskStatus("Draft", "draft"));
         taskStatusRepository.save(new TaskStatus("To Review", "to_review"));
