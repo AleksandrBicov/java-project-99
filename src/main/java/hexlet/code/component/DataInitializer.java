@@ -37,12 +37,13 @@ public class DataInitializer implements ApplicationRunner {
         if (userRepository.findByEmail(userData.getEmail()).isEmpty()) {
             var user = userMapper.map(userData);
             userRepository.save(user);
+
+            // Инициализация дефолтных статусов
+            taskStatusRepository.save(new TaskStatus("Draft", "draft"));
+            taskStatusRepository.save(new TaskStatus("To Review", "to_review"));
+            taskStatusRepository.save(new TaskStatus("To Be Fixed", "to_be_fixed"));
+            taskStatusRepository.save(new TaskStatus("To Publish", "to_publish"));
+            taskStatusRepository.save(new TaskStatus("Published", "published"));
         }
-        // Инициализация дефолтных статусов
-        taskStatusRepository.save(new TaskStatus("Draft", "draft"));
-        taskStatusRepository.save(new TaskStatus("To Review", "to_review"));
-        taskStatusRepository.save(new TaskStatus("To Be Fixed", "to_be_fixed"));
-        taskStatusRepository.save(new TaskStatus("To Publish", "to_publish"));
-        taskStatusRepository.save(new TaskStatus("Published", "published"));
     }
 }
