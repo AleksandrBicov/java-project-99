@@ -11,6 +11,10 @@ plugins {
 group = "hexlet.code"
 version = "0.0.1-SNAPSHOT"
 
+application {
+	mainClass.set("hexlet.code.AppApplication")
+}
+
 java {
 	toolchain {
 		languageVersion = JavaLanguageVersion.of(21)
@@ -22,6 +26,10 @@ sentry {
 	org = "myoirganization"
 	projectName = "java-spring"
 	authToken = System.getenv("SENTRY_AUTH_TOKEN")
+}
+
+tasks.sentryBundleSourcesJava {
+	enabled = System.getenv("SENTRY_AUTH_TOKEN") != null
 }
 
 repositories {
