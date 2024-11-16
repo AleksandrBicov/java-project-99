@@ -36,6 +36,7 @@ public class UserService {
     public UserDTO getById(long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User with id " + id + " not found"));
+
         // Создаем DTO для ответа без пароля
         UserDTO responseDTO = userMapper.map(user);
         responseDTO.setPassword(null);
@@ -66,8 +67,11 @@ public class UserService {
             userMapper.map(userData, user);
             userRepository.save(user);
         }
+        // Создаем DTO для ответа без пароля
+        UserDTO responseDTO = userMapper.map(user);
+        responseDTO.setPassword(null);
 
-        return userMapper.map(user);
+        return responseDTO;
     }
 
     public void delete(Long id) {
