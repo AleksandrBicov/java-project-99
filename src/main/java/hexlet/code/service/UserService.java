@@ -42,7 +42,11 @@ public class UserService {
     public UserDTO create(UserCreateDTO userData) {
         User user = userMapper.map(userData);
         userRepository.save(user);
-        return userMapper.map(user);
+        // Создаем DTO для ответа без пароля
+        UserDTO responseDTO = userMapper.map(user);
+        responseDTO.setPassword(null);
+
+        return responseDTO;
     }
 
     public UserDTO update(UserUpdateDTO userData, Long id) {
