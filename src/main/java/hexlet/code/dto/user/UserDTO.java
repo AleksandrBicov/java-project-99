@@ -12,7 +12,7 @@ public class UserDTO {
     private String firstName;
     private String lastName;
     private String email;
-    @JsonIgnore
+//    @JsonIgnore
     private String password;
     private LocalDate createdAt;
     private LocalDate updatedAt;
