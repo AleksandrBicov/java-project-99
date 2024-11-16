@@ -42,11 +42,7 @@ public class UserService {
     public UserDTO create(UserCreateDTO userData) {
         User user = userMapper.map(userData);
         userRepository.save(user);
-        // Создаем DTO для ответа без пароля
-        UserDTO responseDTO = userMapper.map(user);
-        responseDTO.setPassword(null);
-
-        return responseDTO;
+        return userMapper.map(user);
     }
 
     public UserDTO update(UserUpdateDTO userData, Long id) {
@@ -62,11 +58,8 @@ public class UserService {
             userMapper.map(userData, user);
             userRepository.save(user);
         }
-        // Создаем DTO для ответа без пароля
-        UserDTO responseDTO = userMapper.map(user);
-        responseDTO.setPassword(null);
 
-        return responseDTO;
+        return userMapper.map(user);
     }
 
     public void delete(Long id) {
