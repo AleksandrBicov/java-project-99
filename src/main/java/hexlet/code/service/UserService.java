@@ -36,12 +36,7 @@ public class UserService {
     public UserDTO getById(long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User with id " + id + " not found"));
-
-        // Создаем DTO для ответа без пароля
-        UserDTO responseDTO = userMapper.map(user);
-        responseDTO.setPassword(null);
-
-        return responseDTO;
+        return userMapper.map(user);
     }
 
     public UserDTO create(UserCreateDTO userData) {
