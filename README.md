@@ -5,16 +5,19 @@
 [![Java CI](https://github.com/AleksandrBicov/java-project-99/actions/workflows/build.yml/badge.svg)](https://github.com/AleksandrBicov/java-project-99/actions/workflows/build.yml)
 
 # Task Manager
-Task Manager – система управления задачами. Она позволяет ставить задачи, назначать исполнителей и менять их статусы.
+[Task Manager](https://java-project-99-4p39.onrender.com) – система управления задачами. Она позволяет ставить задачи, назначать исполнителей и менять их статусы.
 
-
-## Setup
+## Clean
+```bash
+make clean
+```
+## Build
 ```bash
 make build
 ```
-## Run
+## Install
 ```bash
-make run
+make install
 ```
 ## Run checkstyle
 ```bash
@@ -23,4 +26,8 @@ make lint
 ## Run tests
 ```bash
 make test
+```
+## Report
+```bash
+make report
 ```
