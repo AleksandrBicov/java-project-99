@@ -1,6 +1,6 @@
 package hexlet.code.dto.user;
 
-//import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import java.time.LocalDate;
@@ -12,7 +12,7 @@ public class UserDTO {
     private String firstName;
     private String lastName;
     private String email;
-//    @JsonIgnore
+    @JsonIgnore
     private String password;
     private LocalDate createdAt;
     private LocalDate updatedAt;

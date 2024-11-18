@@ -13,9 +13,6 @@ import org.openapitools.jackson.nullable.JsonNullable;
 @Setter
 public class UserUpdateDTO {
 
-    @NotNull
-    private JsonNullable<Long> id;
-
     private JsonNullable<String> firstName;
 
     private JsonNullable<String> lastName;
