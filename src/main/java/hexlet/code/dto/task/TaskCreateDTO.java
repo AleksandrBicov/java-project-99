@@ -20,6 +20,7 @@ public class TaskCreateDTO {
 
     private JsonNullable<String> content;
 
+    @NotNull
     @JsonProperty("status")
     private String slug;
 
