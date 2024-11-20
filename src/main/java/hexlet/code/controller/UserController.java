@@ -28,6 +28,10 @@ public class UserController {
 
     private final UserService userService;
 
+    private static final String ONLY_OWNER_BY_ID = """
+            @userRepository.findById(#id).get().getEmail() == authentication.getName()
+        """;
+
     @GetMapping()
     public ResponseEntity<List<UserDTO>> getAll() {
         List<UserDTO> userDTOs = userService.getAll();
@@ -48,14 +52,15 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize(ONLY_OWNER_BY_ID)
     @ResponseStatus(HttpStatus.OK)
     public UserDTO update(@RequestBody @Valid UserUpdateDTO userData, @PathVariable Long id) {
         return userService.update(userData, id);
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize(ONLY_OWNER_BY_ID)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @PreAuthorize("#id == authentication.principal.id")
     public void delete(@PathVariable Long id) {
         userService.delete(id);
     }
