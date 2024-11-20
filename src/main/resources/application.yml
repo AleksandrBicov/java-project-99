@@ -12,6 +12,6 @@ spring:
       ddl-auto: create
       generate-ddl: true
   profiles:
-    default: dev
+    default: development
 env:
   SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
