@@ -16,4 +16,4 @@ test:
 report:
 	./gradlew jacocoTestReport
 
-.PHONY: build frontend
+.PHONY: build
