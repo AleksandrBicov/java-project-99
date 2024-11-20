@@ -64,14 +64,6 @@ public class UserService {
     public void delete(Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User with id " + id + " not found"));
-
-        // Проверка, что пользователь может удалять только себя
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentPrincipalName = authentication.getName();
-        if (!user.getUsername().equals(currentPrincipalName)) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You can only delete your own data.");
-        } else {
-            userRepository.deleteById(id);
-        }
+        userRepository.deleteById(id);
     }
 }
