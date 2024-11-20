@@ -10,7 +10,6 @@ import hexlet.code.model.Label;
 import hexlet.code.repository.LabelRepository;
 
 import hexlet.code.util.ModelGenerator;
-import jakarta.transaction.Transactional;
 import org.assertj.core.api.Assertions;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.BeforeEach;
@@ -85,9 +84,8 @@ class LabelsTest {
     }
 
     @Test
-    @Transactional
     public void testGetAll() throws Exception {
-        var response = mockMvc.perform(get("/api/users").with(jwt()))
+        var response = mockMvc.perform(get("/api/labels").with(jwt()))
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse();

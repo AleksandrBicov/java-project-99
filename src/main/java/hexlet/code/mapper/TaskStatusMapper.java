@@ -28,4 +28,6 @@ public abstract class TaskStatusMapper {
     public abstract TaskStatusDTO map(TaskStatus model);
 
     public abstract void map(TaskStatusUpdateDTO dtoUpdate, @MappingTarget TaskStatus taskStatus);
+
+    public abstract TaskStatus map(TaskStatusDTO labelDTO);
 }
