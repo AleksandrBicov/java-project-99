@@ -2,15 +2,12 @@ package hexlet.code;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import hexlet.code.dto.label.LabelDTO;
-import hexlet.code.model.Label;
 import hexlet.code.util.ModelGenerator;
 import hexlet.code.dto.user.UserCreateDTO;
 import hexlet.code.dto.user.UserDTO;
 import hexlet.code.mapper.UserMapper;
 import hexlet.code.model.User;
 import hexlet.code.repository.UserRepository;
-import org.assertj.core.api.Assertions;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -87,12 +84,6 @@ public class UsersTest {
                 .getResponse();
 
         var body = response.getContentAsString();
-
-//        List<UserDTO> userDTOS = om.readValue(body, new TypeReference<>() { });
-//
-//        List<User> actual = userDTOS.stream().map(userMapper::map).toList();
-//        List<User> expected = userRepository.findAll();
-//        Assertions.assertThat(actual).containsExactlyInAnyOrderElementsOf(expected);
 
         List<UserDTO> actual = om.readValue(body, new TypeReference<>() { });
 
