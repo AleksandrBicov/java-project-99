@@ -93,7 +93,7 @@ class LabelsTest {
                 .getResponse();
         var body = response.getContentAsString();
 
-        List<LabelDTO> labelDTO = om.readValue(body, new TypeReference<>() {});
+        List<LabelDTO> labelDTO = om.readValue(body, new TypeReference<>() { });
 
         List<Label> actual = labelDTO.stream().map(labelMapper::map).toList();
         List<Label> expected = labelRepository.findAll();
