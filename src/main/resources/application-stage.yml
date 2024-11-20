@@ -5,7 +5,7 @@ spring:
   datasource:
     url: jdbc:postgresql://dpg-csrih3ggph6c73b6ur3g-a/my_database_ujvh
     username: my_database_ujvh_user
-    password: ${{secrets.STAGE_SECRET}}
+    password: ${STAGE_SECRET}
     driver-class-name: org.postgresql.Driver
 
   jpa:
