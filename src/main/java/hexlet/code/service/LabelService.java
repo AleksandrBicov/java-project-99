@@ -14,8 +14,8 @@ import java.util.List;
 @Service
 public class LabelService {
 
-    private LabelRepository repository;
-    private LabelMapper labelMapper;
+    private final LabelRepository repository;
+    private final LabelMapper labelMapper;
 
     public List<LabelDTO> getAll() {
         var labels = repository.findAll();

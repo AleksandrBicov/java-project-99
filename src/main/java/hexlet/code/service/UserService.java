@@ -7,6 +7,7 @@ import hexlet.code.exception.ResourceNotFoundException;
 import hexlet.code.mapper.UserMapper;
 import hexlet.code.model.User;
 import hexlet.code.repository.UserRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
@@ -17,14 +18,13 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@AllArgsConstructor
 @Service
 public class UserService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    private UserMapper userMapper;
+    private final UserMapper userMapper;
 
     public List<UserDTO> getAll() {
         List<User> users = userRepository.findAll();

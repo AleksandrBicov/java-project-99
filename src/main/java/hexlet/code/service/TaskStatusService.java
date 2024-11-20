@@ -14,8 +14,8 @@ import java.util.List;
 @AllArgsConstructor
 public class TaskStatusService {
 
-    private TaskStatusRepository repository;
-    private TaskStatusMapper mapper;
+    private final TaskStatusRepository repository;
+    private final TaskStatusMapper mapper;
 
     public List<TaskStatusDTO> getAll() {
         var statuses = repository.findAll();

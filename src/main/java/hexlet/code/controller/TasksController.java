@@ -25,7 +25,7 @@ import java.util.List;
 @AllArgsConstructor
 @RequestMapping("/api/tasks")
 public class TasksController {
-    private TaskService service;
+    private final TaskService service;
 
     @GetMapping()
     public ResponseEntity<List<TaskDTO>> getAll(ParamsDTO params) {

@@ -16,9 +16,9 @@ import java.util.List;
 @AllArgsConstructor
 public class TaskService {
 
-    private TaskRepository repository;
-    private TaskMapper taskMapper;
-    private FiltrationTask taskSpecification;
+    private final TaskRepository repository;
+    private final TaskMapper taskMapper;
+    private final FiltrationTask taskSpecification;
 
     public List<TaskDTO> getAll(ParamsDTO params) {
         var spec = taskSpecification.build(params);
