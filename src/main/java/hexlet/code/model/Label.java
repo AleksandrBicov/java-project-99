@@ -23,8 +23,10 @@ import java.time.LocalDate;
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Label implements BaseEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
     private Long id;
 
     @Column(unique = true)
