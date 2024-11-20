@@ -46,6 +46,7 @@ public class UserController {
     }
 
     @PostMapping(path = "")
+    @PreAuthorize("isAuthenticated()")
     @ResponseStatus(HttpStatus.CREATED)
     public UserDTO create(@Valid @RequestBody UserCreateDTO userData) {
         return userService.create(userData);
