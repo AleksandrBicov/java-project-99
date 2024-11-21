@@ -8,6 +8,7 @@ import hexlet.code.dto.user.UserDTO;
 import hexlet.code.mapper.UserMapper;
 import hexlet.code.model.User;
 import hexlet.code.repository.UserRepository;
+import org.assertj.core.api.Assertions;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,7 +24,6 @@ import org.springframework.web.context.WebApplicationContext;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -85,10 +85,11 @@ public class UsersTest {
 
         var body = response.getContentAsString();
 
-        List<UserDTO> actual = om.readValue(body, new TypeReference<>() { });
+        List<UserDTO> userDTOS = om.readValue(body, new TypeReference<>() { });
 
-        assertThat(actual).isNotEmpty().allMatch(Objects::nonNull);
-
+        List<User> actual = userDTOS.stream().map(userMapper::map).toList();
+        List<User> expected = userRepository.findAll();
+        Assertions.assertThat(actual).containsExactlyInAnyOrderElementsOf(expected);
     }
 
     @Test
