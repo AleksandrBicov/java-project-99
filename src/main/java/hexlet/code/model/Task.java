@@ -34,6 +34,7 @@ public class Task implements BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
     private Long id;
 
     @NotNull
@@ -57,5 +58,6 @@ public class Task implements BaseEntity {
     private User assignee;
 
     @ManyToMany(fetch = FetchType.EAGER)
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Set<Label> labels = new HashSet<>();
 }

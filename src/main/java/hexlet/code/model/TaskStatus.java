@@ -29,6 +29,7 @@ public class TaskStatus {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
+    @EqualsAndHashCode.Include
     private long id;
 
     @Size(min = 1)
