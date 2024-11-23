@@ -15,8 +15,10 @@ import hexlet.code.repository.TaskRepository;
 import hexlet.code.repository.TaskStatusRepository;
 import hexlet.code.repository.UserRepository;
 import hexlet.code.util.ModelGenerator;
+import jakarta.transaction.Transactional;
 import org.assertj.core.api.Assertions;
 import org.instancio.Instancio;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openapitools.jackson.nullable.JsonNullable;
@@ -105,6 +107,12 @@ public class TasksTest {
         testTask.setLabels(new HashSet<>(Set.of(testLabel)));
 
         taskRepository.save(testTask);
+    }
+
+    @AfterEach
+    @Transactional
+    public void tearDown() {
+        taskRepository.deleteAll();
     }
 
     @Test

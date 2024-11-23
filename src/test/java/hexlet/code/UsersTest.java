@@ -8,8 +8,10 @@ import hexlet.code.dto.user.UserDTO;
 import hexlet.code.mapper.UserMapper;
 import hexlet.code.model.User;
 import hexlet.code.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import org.assertj.core.api.Assertions;
 import org.instancio.Instancio;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,6 +92,12 @@ public class UsersTest {
         List<User> actual = userDTOS.stream().map(userMapper::map).toList();
         List<User> expected = userRepository.findAll();
         Assertions.assertThat(actual).containsExactlyInAnyOrderElementsOf(expected);
+    }
+
+    @AfterEach
+    @Transactional
+    public void tearDown() {
+        userRepository.deleteAll();
     }
 
     @Test
