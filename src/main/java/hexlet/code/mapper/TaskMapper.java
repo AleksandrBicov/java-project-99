@@ -76,9 +76,7 @@ public abstract class TaskMapper {
     }
 
     public Set<Label> longToLabel(Set<Long> taskLabelIds) {
-        return taskLabelIds.stream()
-                .map(id -> labelRepository.findById(id).orElseThrow())
-                .collect(Collectors.toSet());
+        return new HashSet<>(labelRepository.findAllById(taskLabelIds));
     }
 
     public TaskStatus toTaskStatus(String slug) {

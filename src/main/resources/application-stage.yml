@@ -3,8 +3,8 @@ spring:
     activate:
       on-profile: stage
   datasource:
-    url: jdbc:postgresql://dpg-csrih3ggph6c73b6ur3g-a/my_database_ujvh
-    username: my_database_ujvh_user
+    url: ${JDBC_URL}
+    username: ${USER_NAME}
     password: ${STAGE_SECRET}
     driver-class-name: org.postgresql.Driver
 
