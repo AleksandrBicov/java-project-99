@@ -89,6 +89,14 @@ public class UsersTest {
         userRepository.save(testUser);
     }
 
+    @AfterEach
+    public void clean() {
+        taskRepository.deleteAll();
+        userRepository.deleteAll();
+        labelRepository.deleteAll();
+        taskStatusRepository.deleteAll();
+    }
+
     @Test
     public void testIndex() throws Exception {
         var response = mockMvc.perform(get("/api/users").with(jwt()))
@@ -103,14 +111,6 @@ public class UsersTest {
         List<User> actual = userDTOS.stream().map(userMapper::map).toList();
         List<User> expected = userRepository.findAll();
         Assertions.assertThat(actual).containsExactlyInAnyOrderElementsOf(expected);
-    }
-
-    @AfterEach
-    public void clean() {
-        taskRepository.deleteAll();
-        userRepository.deleteAll();
-        labelRepository.deleteAll();
-        taskStatusRepository.deleteAll();
     }
 
     @Test
