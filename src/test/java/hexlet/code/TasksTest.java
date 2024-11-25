@@ -15,7 +15,6 @@ import hexlet.code.repository.TaskRepository;
 import hexlet.code.repository.TaskStatusRepository;
 import hexlet.code.repository.UserRepository;
 import hexlet.code.util.ModelGenerator;
-import jakarta.transaction.Transactional;
 import org.assertj.core.api.Assertions;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.AfterEach;
@@ -98,6 +97,7 @@ public class TasksTest {
         User testUser = Instancio.of(modelGenerator.getUserModel()).create();
         Label testLabel = Instancio.of(modelGenerator.getLabelModel()).create();
 
+        taskStatusRepository.save(new TaskStatus("Draft2", "draft2"));
         taskStatusRepository.save(testTaskStatus);
         userRepository.save(testUser);
         labelRepository.save(testLabel);
@@ -110,9 +110,11 @@ public class TasksTest {
     }
 
     @AfterEach
-    @Transactional
-    public void tearDown() {
+    public void clean() {
         taskRepository.deleteAll();
+        userRepository.deleteAll();
+        labelRepository.deleteAll();
+        taskStatusRepository.deleteAll();
     }
 
     @Test
@@ -158,7 +160,9 @@ public class TasksTest {
 
     @Test
     public void testCreate() throws Exception {
-        var taskStatus = taskStatusRepository.findBySlug("draft").get();
+
+        var taskStatus = taskStatusRepository.findBySlug("draft2")
+                .orElseThrow(() -> new IllegalArgumentException("Status not found!"));
         var data = new TaskCreateDTO();
         data.setTitle("Task");
         data.setSlug(taskStatus.getSlug());
@@ -170,7 +174,8 @@ public class TasksTest {
         mockMvc.perform(request)
                 .andExpect(status().isCreated());
 
-        var task = taskRepository.findByName(data.getTitle()).get();
+        var task = taskRepository.findByName(data.getTitle())
+                .orElseThrow(() -> new IllegalArgumentException("Task not found!"));
 
         assertNotNull(task);
         assertThat(task.getName()).isEqualTo(data.getTitle());
@@ -188,7 +193,8 @@ public class TasksTest {
         mockMvc.perform(request)
                 .andExpect(status().isOk());
 
-        var task = taskRepository.findById(testTask.getId()).get();
+        var task = taskRepository.findById(testTask.getId())
+                .orElseThrow(() -> new IllegalArgumentException("Task not found!"));
         assertThat(task.getName()).isEqualTo("Task");
     }
 

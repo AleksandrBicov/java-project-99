@@ -7,11 +7,15 @@ import hexlet.code.dto.taskStatus.TaskStatusDTO;
 import hexlet.code.dto.taskStatus.TaskStatusUpdateDTO;
 import hexlet.code.mapper.TaskStatusMapper;
 import hexlet.code.model.TaskStatus;
+import hexlet.code.repository.LabelRepository;
+import hexlet.code.repository.TaskRepository;
 import hexlet.code.repository.TaskStatusRepository;
 
+import hexlet.code.repository.UserRepository;
 import hexlet.code.util.ModelGenerator;
 import org.assertj.core.api.Assertions;
 import org.instancio.Instancio;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openapitools.jackson.nullable.JsonNullable;
@@ -49,7 +53,16 @@ class TaskStatusTest {
     private MockMvc mockMvc;
 
     @Autowired
-    private TaskStatusRepository repository;
+    private LabelRepository labelRepository;
+
+    @Autowired
+    private TaskRepository taskRepository;
+
+    @Autowired
+    private TaskStatusRepository taskStatusRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private ModelGenerator modelGenerator;
@@ -76,7 +89,15 @@ class TaskStatusTest {
 
         testTaskStatus = Instancio.of(modelGenerator.getTaskStatusModel()).create();
 
-        repository.save(testTaskStatus);
+        taskStatusRepository.save(testTaskStatus);
+    }
+
+    @AfterEach
+    public void clean() {
+        taskRepository.deleteAll();
+        userRepository.deleteAll();
+        labelRepository.deleteAll();
+        taskStatusRepository.deleteAll();
     }
 
     @Test
@@ -90,7 +111,7 @@ class TaskStatusTest {
         List<TaskStatusDTO> statusDTOS = om.readValue(body, new TypeReference<>() { });
 
         var actual = statusDTOS.stream().map(taskStatusMapper::map).toList();
-        var expected = repository.findAll();
+        var expected = taskStatusRepository.findAll();
         Assertions.assertThat(actual).containsExactlyInAnyOrderElementsOf(expected);
     }
 
@@ -111,7 +132,8 @@ class TaskStatusTest {
 
         mockMvc.perform(request).andExpect(status().isCreated());
 
-        var taskStatus = repository.findBySlug(data.getSlug()).get();
+        var taskStatus = taskStatusRepository.findBySlug(data.getSlug())
+                .orElseThrow(() -> new IllegalArgumentException("TaskStatus not found!"));
 
         assertNotNull(taskStatus);
         assertThat(taskStatus.getName()).isEqualTo(data.getName());
@@ -130,7 +152,8 @@ class TaskStatusTest {
 
         mockMvc.perform(request).andExpect(status().isOk());
 
-        var updatedTask = repository.findById(testTaskStatus.getId()).get();
+        var updatedTask = taskStatusRepository.findById(testTaskStatus.getId())
+                .orElseThrow(() -> new IllegalArgumentException("TaskStatus not found!"));
 
         assertNotNull(updatedTask);
         assertThat(updatedTask.getName()).isEqualTo(updatedData.getName().get());

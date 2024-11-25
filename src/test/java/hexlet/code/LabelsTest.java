@@ -9,9 +9,13 @@ import hexlet.code.mapper.LabelMapper;
 import hexlet.code.model.Label;
 import hexlet.code.repository.LabelRepository;
 
+import hexlet.code.repository.TaskRepository;
+import hexlet.code.repository.TaskStatusRepository;
+import hexlet.code.repository.UserRepository;
 import hexlet.code.util.ModelGenerator;
 import org.assertj.core.api.Assertions;
 import org.instancio.Instancio;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openapitools.jackson.nullable.JsonNullable;
@@ -54,6 +58,15 @@ class LabelsTest {
     private LabelRepository labelRepository;
 
     @Autowired
+    private TaskRepository taskRepository;
+
+    @Autowired
+    private TaskStatusRepository taskStatusRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
     private ModelGenerator modelGenerator;
 
     @Autowired
@@ -79,6 +92,14 @@ class LabelsTest {
 
         labelRepository.save(testLabel);
 
+    }
+
+    @AfterEach
+    public void clean() {
+        taskRepository.deleteAll();
+        userRepository.deleteAll();
+        labelRepository.deleteAll();
+        taskStatusRepository.deleteAll();
     }
 
     @Test
@@ -114,7 +135,8 @@ class LabelsTest {
 
         mockMvc.perform(request).andExpect(status().isCreated());
 
-        var label = labelRepository.findByName(data.getName()).get();
+        var label = labelRepository.findByName(data.getName())
+                .orElseThrow(() -> new IllegalArgumentException("Label not found!"));
 
         assertNotNull(label);
         assertThat(label.getName()).isEqualTo(data.getName());
@@ -122,18 +144,21 @@ class LabelsTest {
 
     @Test
     public void testUpdate() throws Exception {
-        var data = new LabelUpdateDTO();
-        data.setName(JsonNullable.of("new"));
+        var updatedData = new LabelUpdateDTO();
+        updatedData.setName(JsonNullable.of("new"));
+
         var request = put("/api/labels/" + testLabel.getId())
                 .with(token)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(om.writeValueAsString(data));
+                .content(om.writeValueAsString(updatedData));
 
         mockMvc.perform(request).andExpect(status().isOk());
 
-        var updatedLabel = labelRepository.findByName(data.getName().get()).get();
+        var updatedLabel = labelRepository.findById(testLabel.getId())
+                .orElseThrow(() -> new IllegalArgumentException("Label not found!"));
 
         assertNotNull(updatedLabel);
+        assertThat(updatedLabel.getName()).isEqualTo(updatedData.getName().get());
     }
 
     @Test

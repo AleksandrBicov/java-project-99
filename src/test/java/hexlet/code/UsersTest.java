@@ -2,13 +2,15 @@ package hexlet.code;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import hexlet.code.repository.LabelRepository;
+import hexlet.code.repository.TaskRepository;
+import hexlet.code.repository.TaskStatusRepository;
 import hexlet.code.util.ModelGenerator;
 import hexlet.code.dto.user.UserCreateDTO;
 import hexlet.code.dto.user.UserDTO;
 import hexlet.code.mapper.UserMapper;
 import hexlet.code.model.User;
 import hexlet.code.repository.UserRepository;
-import jakarta.transaction.Transactional;
 import org.assertj.core.api.Assertions;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.AfterEach;
@@ -47,6 +49,15 @@ public class UsersTest {
 
     @Autowired
     private WebApplicationContext wac;
+
+    @Autowired
+    private LabelRepository labelRepository;
+
+    @Autowired
+    private TaskRepository taskRepository;
+
+    @Autowired
+    private TaskStatusRepository taskStatusRepository;
 
     @Autowired
     private UserRepository userRepository;
@@ -95,9 +106,11 @@ public class UsersTest {
     }
 
     @AfterEach
-    @Transactional
-    public void tearDown() {
+    public void clean() {
+        taskRepository.deleteAll();
         userRepository.deleteAll();
+        labelRepository.deleteAll();
+        taskStatusRepository.deleteAll();
     }
 
     @Test
@@ -131,7 +144,8 @@ public class UsersTest {
         mockMvc.perform(request)
                 .andExpect(status().isCreated());
 
-        var user = userRepository.findByEmail(createDto.getEmail()).get();
+        var user = userRepository.findByEmail(createDto.getEmail())
+                .orElseThrow(() -> new IllegalArgumentException("User not found!"));
 
         assertNotNull(user);
         assertThat(user.getEmail()).isEqualTo(createDto.getEmail());
@@ -150,7 +164,8 @@ public class UsersTest {
         mockMvc.perform(request)
                 .andExpect(status().isOk());
 
-        var user = userRepository.findById(testUser.getId()).get();
+        var user = userRepository.findById(testUser.getId())
+                .orElseThrow(() -> new IllegalArgumentException("User not found!"));
         assertThat(user.getFirstName()).isEqualTo(("test"));
     }
 
